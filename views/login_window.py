@@ -17,7 +17,7 @@ class LoginWindow(tk.Tk):
         
         # Window configuration
         window_width = 480
-        window_height = 500
+        window_height = 650
         UIHelper.center_window(self, window_width, window_height)
         self.resizable(False, False)
         
@@ -35,39 +35,59 @@ class LoginWindow(tk.Tk):
     def create_widgets(self):
         """Create and arrange UI widgets"""
         
-        # Header section
+        # Modern header section with gradient effect
         header_frame = tk.Frame(self, bg="#f5f7fa")
-        header_frame.pack(pady=(40, 20))
+        header_frame.pack(pady=(30, 15))
         
-        # App title
+        # Modern icon and title
+        icon_title_frame = tk.Frame(header_frame, bg="#f5f7fa")
+        icon_title_frame.pack()
+        
+        # System icon
+        icon_label = tk.Label(
+            icon_title_frame,
+            text="🏢",
+            bg="#f5f7fa",
+            font=("Segoe UI", 24)
+        )
+        icon_label.pack()
+        
+        # App title with modern styling
         title_label = tk.Label(
             header_frame, 
             text="Employee Management System", 
             bg="#f5f7fa", 
             fg="#2c3e50",
-            font=("Segoe UI", 20, "bold")
+            font=("Segoe UI", 18, "bold")
         )
-        title_label.pack()
+        title_label.pack(pady=(5, 0))
         
-        # Version label
-        version_label = tk.Label(
-            header_frame, 
-            text="Version 2.0 - Professional Edition", 
-            bg="#f5f7fa", 
+        # Modern subtitle
+        subtitle_label = tk.Label(
+            header_frame,
+            text="Version 2.0 - Professional Edition",
+            bg="#f5f7fa",
             fg="#7f8c8d",
             font=("Segoe UI", 10)
         )
-        version_label.pack(pady=(5, 0))
+        subtitle_label.pack()
         
-        # Welcome text
+        # Welcome message with modern styling
+        welcome_frame = tk.Frame(self, bg="#f5f7fa")
+        welcome_frame.pack(pady=(10, 20))
+        
         welcome_label = tk.Label(
-            header_frame, 
-            text="Please sign in to your account", 
-            bg="#f5f7fa", 
+            welcome_frame,
+            text="🔐 Please sign in to your account",
+            bg="#f5f7fa",
             fg="#34495e",
             font=("Segoe UI", 12)
         )
-        welcome_label.pack(pady=(20, 0))
+        welcome_label.pack()
+        
+
+        
+
         
         # Form frame
         form_frame = tk.Frame(self, bg="#f5f7fa")
@@ -365,6 +385,199 @@ class LoginWindow(tk.Tk):
         except Exception as e:
             logger.error(f"Error opening main application: {e}")
             messagebox.showerror("Error", "Failed to open main application")
+    
+    def show_signup(self):
+        """Show signup dialog with modern design"""
+        signup_window = tk.Toplevel(self)
+        signup_window.title("Create New Account")
+        signup_window.configure(bg="#f5f7fa")
+        signup_window.geometry("450x600")
+        signup_window.resizable(False, False)
+        
+        # Center the window
+        signup_window.transient(self)
+        signup_window.grab_set()
+        
+        # Modern header
+        header_frame = tk.Frame(signup_window, bg="#f5f7fa")
+        header_frame.pack(pady=(30, 20))
+        
+        icon_label = tk.Label(header_frame, text="👤", bg="#f5f7fa", font=("Segoe UI", 28))
+        icon_label.pack()
+        
+        title_label = tk.Label(
+            header_frame,
+            text="Create Your Account",
+            bg="#f5f7fa",
+            fg="#2c3e50",
+            font=("Segoe UI", 18, "bold")
+        )
+        title_label.pack(pady=(10, 5))
+        
+        subtitle_label = tk.Label(
+            header_frame,
+            text="Join our employee management system",
+            bg="#f5f7fa",
+            fg="#7f8c8d",
+            font=("Segoe UI", 10)
+        )
+        subtitle_label.pack()
+        
+        # Form frame
+        form_frame = tk.Frame(signup_window, bg="#f5f7fa")
+        form_frame.pack(pady=20, padx=40, fill="x")
+        
+        # Information message
+        info_label = tk.Label(
+            form_frame,
+            text="⚠️ Contact Administrator\n\nNew accounts must be created by system administrators.\nPlease contact your IT department or system admin\nto create your employee account.",
+            bg="#fff3cd",
+            fg="#856404",
+            font=("Segoe UI", 11),
+            relief="solid",
+            borderwidth=1,
+            padx=20,
+            pady=15,
+            justify="center"
+        )
+        info_label.pack(fill="x", pady=(20, 20))
+        
+        # Contact admin button
+        contact_btn = tk.Button(
+            form_frame,
+            text="📧 Contact Administrator",
+            bg="#3498db",
+            fg="white",
+            font=("Segoe UI", 12, "bold"),
+            relief="flat",
+            cursor="hand2",
+            padx=30,
+            pady=12,
+            command=lambda: messagebox.showinfo(
+                "Contact Information",
+                "Please contact:\n\n📧 Email: eng.musamolla@gmail.com\n👤 Admin: Musa Molla\n\nProvide your employee details for account creation."
+            )
+        )
+        contact_btn.pack(pady=(10, 20))
+        
+        # Close button
+        close_btn = tk.Button(
+            form_frame,
+            text="✖️ Close",
+            bg="#95a5a6",
+            fg="white",
+            font=("Segoe UI", 11),
+            relief="flat",
+            cursor="hand2",
+            padx=30,
+            pady=10,
+            command=signup_window.destroy
+        )
+        close_btn.pack()
+    
+    def show_forgot_password(self):
+        """Show forgot password dialog with modern design"""
+        forgot_window = tk.Toplevel(self)
+        forgot_window.title("Password Recovery")
+        forgot_window.configure(bg="#f5f7fa")
+        forgot_window.geometry("450x500")
+        forgot_window.resizable(False, False)
+        
+        # Center the window
+        forgot_window.transient(self)
+        forgot_window.grab_set()
+        
+        # Modern header
+        header_frame = tk.Frame(forgot_window, bg="#f5f7fa")
+        header_frame.pack(pady=(30, 20))
+        
+        icon_label = tk.Label(header_frame, text="🔐", bg="#f5f7fa", font=("Segoe UI", 28))
+        icon_label.pack()
+        
+        title_label = tk.Label(
+            header_frame,
+            text="Password Recovery",
+            bg="#f5f7fa",
+            fg="#2c3e50",
+            font=("Segoe UI", 18, "bold")
+        )
+        title_label.pack(pady=(10, 5))
+        
+        subtitle_label = tk.Label(
+            header_frame,
+            text="Reset your account password",
+            bg="#f5f7fa",
+            fg="#7f8c8d",
+            font=("Segoe UI", 10)
+        )
+        subtitle_label.pack()
+        
+        # Form frame
+        form_frame = tk.Frame(forgot_window, bg="#f5f7fa")
+        form_frame.pack(pady=20, padx=40, fill="x")
+        
+        # Information message
+        info_label = tk.Label(
+            form_frame,
+            text="🔒 Password Reset Required\n\nFor security reasons, password resets must be\nhandled by system administrators.\n\nPlease contact your administrator with:\n• Your username\n• Employee ID\n• Reason for reset",
+            bg="#e7f3ff",
+            fg="#0c5460",
+            font=("Segoe UI", 11),
+            relief="solid",
+            borderwidth=1,
+            padx=20,
+            pady=15,
+            justify="center"
+        )
+        info_label.pack(fill="x", pady=(20, 20))
+        
+        # Demo credentials reminder
+        demo_label = tk.Label(
+            form_frame,
+            text="🎯 Demo Access\n\nFor demonstration purposes, use:\n• Admin: admin / admin123\n• Test: test / test",
+            bg="#d4edda",
+            fg="#155724",
+            font=("Segoe UI", 10),
+            relief="solid",
+            borderwidth=1,
+            padx=15,
+            pady=12,
+            justify="center"
+        )
+        demo_label.pack(fill="x", pady=(10, 20))
+        
+        # Contact admin button
+        contact_btn = tk.Button(
+            form_frame,
+            text="📧 Contact Administrator",
+            bg="#e74c3c",
+            fg="white",
+            font=("Segoe UI", 12, "bold"),
+            relief="flat",
+            cursor="hand2",
+            padx=30,
+            pady=12,
+            command=lambda: messagebox.showinfo(
+                "Administrator Contact",
+                "Password Reset Support:\n\n📧 Email: eng.musamolla@gmail.com\n👤 Admin: Musa Molla\n🏢 System Administrator\n\nInclude your username and employee details."
+            )
+        )
+        contact_btn.pack(pady=(10, 10))
+        
+        # Close button
+        close_btn = tk.Button(
+            form_frame,
+            text="✖️ Close",
+            bg="#95a5a6",
+            fg="white",
+            font=("Segoe UI", 11),
+            relief="flat",
+            cursor="hand2",
+            padx=30,
+            pady=10,
+            command=forgot_window.destroy
+        )
+        close_btn.pack()
 
 if __name__ == "__main__":
     # For testing the login window independently
