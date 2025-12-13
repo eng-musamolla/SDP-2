@@ -94,7 +94,7 @@ class LoginWindow(tk.Tk):
             highlightcolor="#3498db",
             highlightbackground="#bdc3c7"
         )
-        self.username_entry.pack(fill="x", pady=(0, 15), ipady=10)
+        self.username_entry.pack(fill="x", pady=(0, 15), ipady=10, ipadx=8)
         
         # Password field
         tk.Label(

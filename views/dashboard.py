@@ -184,7 +184,7 @@ class DashboardWindow(tk.Tk):
         title_label.pack(anchor="w", pady=(0, 10))
         
         buttons_frame = tk.Frame(parent, bg="#f0f4f8")
-        buttons_frame.pack(fill="x")
+        buttons_frame.pack(fill="x", pady=(0, 10))
         
         # Button configurations based on user role
         buttons_config = []
@@ -217,36 +217,48 @@ class DashboardWindow(tk.Tk):
                 "command": self.manage_users
             })
         
-        # Create buttons
-        for config in buttons_config:
-            btn = tk.Button(
-                buttons_frame,
-                text=config["text"],
-                bg=config["color"],
-                fg="white",
-                font=("Segoe UI", 12, "bold"),
-                relief="flat",
-                command=config["command"],
-                cursor="hand2",
-                padx=30,
-                pady=15
-            )
-            btn.pack(side="left", padx=10)
+        # Create main action buttons with justified layout
+        main_buttons_frame = tk.Frame(buttons_frame, bg="#f0f4f8")
+        main_buttons_frame.pack(side="left", fill="x", expand=True)
         
-        # Add refresh dashboard button
+        # Calculate button width for even distribution
+        total_buttons = len(buttons_config)
+        if total_buttons > 0:
+            for i, config in enumerate(buttons_config):
+                btn = tk.Button(
+                    main_buttons_frame,
+                    text=config["text"],
+                    bg=config["color"],
+                    fg="white",
+                    font=("Segoe UI", 11, "bold"),
+                    relief="flat",
+                    command=config["command"],
+                    cursor="hand2",
+                    padx=20,
+                    pady=12,
+                    width=15
+                )
+                # Pack with equal spacing
+                btn.pack(side="left", padx=(5, 5), fill="x", expand=True)
+        
+        # Add refresh button on the right side
+        refresh_frame = tk.Frame(buttons_frame, bg="#f0f4f8")
+        refresh_frame.pack(side="right", padx=(10, 0))
+        
         refresh_btn = tk.Button(
-            buttons_frame,
-            text="🔄 Refresh Dashboard",
+            refresh_frame,
+            text="🔄 Refresh",
             bg="#95a5a6",
             fg="white",
-            font=("Segoe UI", 12, "bold"),
+            font=("Segoe UI", 11, "bold"),
             relief="flat",
             command=self.refresh_dashboard,
             cursor="hand2",
-            padx=30,
-            pady=15
+            padx=20,
+            pady=12,
+            width=12
         )
-        refresh_btn.pack(side="right", padx=10)
+        refresh_btn.pack()
 
     def create_search_section(self, parent):
         """Create quick employee search section"""
