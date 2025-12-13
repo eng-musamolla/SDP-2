@@ -1,0 +1,33 @@
+# Core dependencies
+mysql-connector-python==8.2.0
+python-dotenv==1.0.0
+
+# GUI enhancements
+ttkbootstrap==1.10.1
+Pillow==10.1.0
+
+# Data processing and export
+pandas==2.1.4
+openpyxl==3.1.2
+reportlab==4.0.7
+
+# Data visualization
+matplotlib==3.8.2
+plotly==5.17.0
+
+# Development and testing
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.12.0
+flake8==6.1.0
+
+# Security
+cryptography==41.0.8
+bcrypt==4.1.2
+
+# Logging and monitoring
+python-json-logger==2.0.7
+
+# Optional: For advanced features
+requests==2.31.0
+schedule==1.2.0
