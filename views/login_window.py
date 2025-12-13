@@ -593,68 +593,118 @@ class LoginWindow(tk.Tk):
         form_frame = tk.Frame(forgot_window, bg="#f5f7fa")
         form_frame.pack(pady=20, padx=40, fill="x")
         
-        # Information message
+        # Rounded information message container
+        info_container = tk.Frame(form_frame, bg="#f5f7fa")
+        info_container.pack(fill="x", pady=(20, 20))
+        
+        # Top rounded corners for info panel
+        info_top = tk.Frame(info_container, bg="#f5f7fa", height=4)
+        info_top.pack(fill="x", padx=6)
+        
+        # Information message with rounded appearance
         info_label = tk.Label(
-            form_frame,
+            info_container,
             text="🔒 Password Reset Required\n\nFor security reasons, password resets must be\nhandled by system administrators.\n\nPlease contact your administrator with:\n• Your username\n• Employee ID\n• Reason for reset",
             bg="#e7f3ff",
             fg="#0c5460",
             font=("Segoe UI", 11),
-            relief="solid",
-            borderwidth=1,
+            relief="flat",
+            borderwidth=0,
             padx=20,
             pady=15,
             justify="center"
         )
-        info_label.pack(fill="x", pady=(20, 20))
+        info_label.pack(fill="x", padx=3, pady=(0, 4))
         
-        # Demo credentials reminder
+        # Bottom rounded corners for info panel
+        info_bottom = tk.Frame(info_container, bg="#f5f7fa", height=4)
+        info_bottom.pack(fill="x", padx=6)
+        
+        # Rounded demo credentials container
+        demo_container = tk.Frame(form_frame, bg="#f5f7fa")
+        demo_container.pack(fill="x", pady=(10, 20))
+        
+        # Top rounded corners for demo panel
+        demo_top = tk.Frame(demo_container, bg="#f5f7fa", height=4)
+        demo_top.pack(fill="x", padx=6)
+        
+        # Demo credentials reminder with rounded appearance
         demo_label = tk.Label(
-            form_frame,
+            demo_container,
             text="🎯 Demo Access\n\nFor demonstration purposes, use:\n• Admin: admin / admin123\n• Test: test / test",
             bg="#d4edda",
             fg="#155724",
             font=("Segoe UI", 10),
-            relief="solid",
-            borderwidth=1,
+            relief="flat",
+            borderwidth=0,
             padx=15,
             pady=12,
             justify="center"
         )
-        demo_label.pack(fill="x", pady=(10, 20))
+        demo_label.pack(fill="x", padx=3, pady=(0, 4))
         
-        # Contact admin button
+        # Bottom rounded corners for demo panel
+        demo_bottom = tk.Frame(demo_container, bg="#f5f7fa", height=4)
+        demo_bottom.pack(fill="x", padx=6)
+        
+        # Rounded contact admin button container
+        contact_container = tk.Frame(form_frame, bg="#f5f7fa", height=60)
+        contact_container.pack(pady=(10, 10))
+        contact_container.pack_propagate(False)
+        
+        # Top rounded corners for contact button
+        contact_top = tk.Frame(contact_container, bg="#f5f7fa", height=5)
+        contact_top.pack(fill="x", padx=8)
+        
+        # Contact admin button with rounded appearance
         contact_btn = tk.Button(
-            form_frame,
+            contact_container,
             text="📧 Contact Administrator",
             bg="#e74c3c",
             fg="white",
             font=("Segoe UI", 12, "bold"),
             relief="flat",
             cursor="hand2",
-            padx=30,
-            pady=12,
+            bd=0,
+            highlightthickness=0,
             command=lambda: messagebox.showinfo(
                 "Administrator Contact",
                 "Password Reset Support:\n\n📧 Email: eng.musamolla@gmail.com\n👤 Admin: Musa Molla\n🏢 System Administrator\n\nInclude your username and employee details."
             )
         )
-        contact_btn.pack(pady=(10, 10))
+        contact_btn.pack(fill="x", padx=4, pady=(0, 5))
         
-        # Close button
+        # Bottom rounded corners for contact button
+        contact_bottom = tk.Frame(contact_container, bg="#f5f7fa", height=5)
+        contact_bottom.pack(fill="x", padx=8)
+        
+        # Rounded close button container
+        close_container = tk.Frame(form_frame, bg="#f5f7fa", height=50)
+        close_container.pack()
+        close_container.pack_propagate(False)
+        
+        # Top rounded corners for close button
+        close_top = tk.Frame(close_container, bg="#f5f7fa", height=4)
+        close_top.pack(fill="x", padx=6)
+        
+        # Close button with rounded appearance
         close_btn = tk.Button(
-            form_frame,
+            close_container,
             text="✖️ Close",
             bg="#95a5a6",
             fg="white",
             font=("Segoe UI", 11),
             relief="flat",
             cursor="hand2",
-            padx=30,
-            pady=10,
+            bd=0,
+            highlightthickness=0,
             command=forgot_window.destroy
         )
-        close_btn.pack()
+        close_btn.pack(fill="x", padx=3, pady=(0, 4))
+        
+        # Bottom rounded corners for close button
+        close_bottom = tk.Frame(close_container, bg="#f5f7fa", height=4)
+        close_bottom.pack(fill="x", padx=6)
 
 if __name__ == "__main__":
     # For testing the login window independently

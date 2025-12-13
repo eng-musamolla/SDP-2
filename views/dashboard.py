@@ -30,19 +30,19 @@ class DashboardWindow(tk.Tk):
         """Create and arrange dashboard widgets"""
         
         # Header frame
-        header_frame = tk.Frame(self, bg="#2c3e50", height=80)
+        header_frame = tk.Frame(self, bg="#2c3e50", height=60)
         header_frame.pack(fill="x")
         header_frame.pack_propagate(False)
         
         # Header content
         header_content = tk.Frame(header_frame, bg="#2c3e50")
-        header_content.pack(expand=True, fill="both", padx=20, pady=15)
+        header_content.pack(expand=True, fill="both", padx=15, pady=15)
         
         # Title
         title_label = tk.Label(
             header_content,
             text="Employee Management Dashboard",
-            font=("Segoe UI", 20, "bold"),
+            font=("Segoe UI", 16, "bold"),
             bg="#2c3e50",
             fg="white"
         )
@@ -219,7 +219,7 @@ class DashboardWindow(tk.Tk):
         
         # Create main action buttons with justified layout
         main_buttons_frame = tk.Frame(buttons_frame, bg="#f0f4f8")
-        main_buttons_frame.pack(side="left", fill="x", expand=True)
+        main_buttons_frame.pack(fill="x", expand=True)
         
         # Calculate button width for even distribution
         total_buttons = len(buttons_config)
@@ -240,25 +240,6 @@ class DashboardWindow(tk.Tk):
                 )
                 # Pack with equal spacing
                 btn.pack(side="left", padx=(5, 5), fill="x", expand=True)
-        
-        # Add refresh button on the right side
-        refresh_frame = tk.Frame(buttons_frame, bg="#f0f4f8")
-        refresh_frame.pack(side="right", padx=(10, 0))
-        
-        refresh_btn = tk.Button(
-            refresh_frame,
-            text="🔄 Refresh",
-            bg="#95a5a6",
-            fg="white",
-            font=("Segoe UI", 11, "bold"),
-            relief="flat",
-            command=self.refresh_dashboard,
-            cursor="hand2",
-            padx=20,
-            pady=12,
-            width=12
-        )
-        refresh_btn.pack()
 
     def create_search_section(self, parent):
         """Create quick employee search section"""
