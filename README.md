@@ -339,12 +339,20 @@ docker-compose up -d
 - Simple authentication
 - MySQL integration
 
-## 📞 Support
+## �‍💻 Author
 
-For support and questions:
-- **Email**: support@employeemanagement.com
-- **Documentation**: [Wiki](wiki-url)
-- **Issues**: [GitHub Issues](issues-url)
+**Musa Molla**  
+📧 **Email**: [eng.musamolla@gmail.com](mailto:eng.musamolla@gmail.com)  
+🐙 **GitHub**: [@eng-musamolla](https://github.com/eng-musamolla)  
+📍 **Location**: Bangladesh  
+
+## 📞 Support & Contact
+
+For support, questions, or collaboration:
+- **📧 Direct Email**: [eng.musamolla@gmail.com](mailto:eng.musamolla@gmail.com)
+- **🐛 Report Issues**: [GitHub Issues](https://github.com/eng-musamolla/SDP-2/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/eng-musamolla/SDP-2/discussions)
+- **📋 Documentation**: [Project Wiki](https://github.com/eng-musamolla/SDP-2/wiki)
 
 ## 📄 License
 
@@ -370,4 +378,6 @@ This project is suitable for:
 
 ---
 
-**Built with ❤️ for SDP 2 Project Submission**# SDP-2
+**Built with ❤️ by [Musa Molla](mailto:eng.musamolla@gmail.com) for SDP 2 Project Submission**
+
+# SDP-2
