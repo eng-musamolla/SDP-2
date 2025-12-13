@@ -56,7 +56,7 @@ class User:
     
     @classmethod
     def authenticate(cls, username: str, password: str) -> Optional['User']:
-        """Authenticate user with username and password"""
+        """Authenticate user with username and password - supports both plain text and hashed passwords"""
         try:
             query = """
                 SELECT Id, Username, Password, Role, IsActive, CreatedAt, UpdatedAt 
@@ -64,18 +64,30 @@ class User:
             """
             result = db_manager.execute_query(query, (username,), fetch='one')
             
-            if result and SecurityManager.verify_password(password, result[2]):
-                user = cls()
-                user.id = result[0]
-                user.username = result[1]
-                user.password = result[2]
-                user.role = result[3]
-                user.is_active = result[4]
-                user.created_at = result[5]
-                user.updated_at = result[6]
+            if result:
+                stored_password = result[2]
+                password_valid = False
                 
-                logger.info(f"User {username} authenticated successfully")
-                return user
+                # Check if password is hashed (contains ':') or plain text
+                if ':' in stored_password:
+                    # Hashed password - use security manager
+                    password_valid = SecurityManager.verify_password(password, stored_password)
+                else:
+                    # Plain text password - direct comparison for development/demo
+                    password_valid = (password == stored_password)
+                
+                if password_valid:
+                    user = cls()
+                    user.id = result[0]
+                    user.username = result[1]
+                    user.password = result[2]
+                    user.role = result[3]
+                    user.is_active = result[4]
+                    user.created_at = result[5]
+                    user.updated_at = result[6]
+                    
+                    logger.info(f"User {username} authenticated successfully")
+                    return user
             
             logger.warning(f"Authentication failed for user {username}")
             return None

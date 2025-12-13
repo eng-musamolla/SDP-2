@@ -61,9 +61,9 @@ CREATE TABLE IF NOT EXISTS AuditLog (
     FOREIGN KEY (UserId) REFERENCES Users(Id)
 );
 
--- Insert default users with secure hashed passwords
+-- Insert default users with plain text passwords for easy development/demo
 -- Passwords: admin123, manager123, test (for demo purposes)
--- Note: These passwords meet SECURITY_CONFIG requirements from settings.py
+-- Note: The application supports both plain text and hashed passwords
 
 INSERT IGNORE INTO Users (Username, Password, Role) VALUES 
 ('admin', 'admin123', 'admin'),

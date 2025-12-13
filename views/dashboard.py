@@ -404,12 +404,31 @@ class DashboardWindow(tk.Tk):
         
         # Database connection status
         try:
-            Employee.get_all_employees(limit=1)
-            db_status = "✅ Database: Connected"
-            db_color = "#27ae60"
-        except:
-            db_status = "❌ Database: Connection Error"
-            db_color = "#e74c3c"
+            from config.database import db_manager
+            # Test if we can access the database and check for tables
+            db_manager.execute_query("SELECT 1", fetch='one')
+            
+            # Check if main tables exist
+            tables_check = db_manager.execute_query(
+                "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='EmployeeDB' AND table_name IN ('Users', 'Employees', 'AuditLog')",
+                fetch='one'
+            )
+            
+            if tables_check and tables_check[0] >= 3:
+                db_status = "✅ Database: Connected & Ready"
+                db_color = "#27ae60"
+            else:
+                db_status = "⚠️ Database: Setup Required"
+                db_color = "#f39c12"
+                
+        except Exception as e:
+            error_msg = str(e).lower()
+            if "unknown database" in error_msg or "database" in error_msg:
+                db_status = "⚠️ Database: Setup Required"
+                db_color = "#f39c12"
+            else:
+                db_status = "❌ Database: Connection Error"
+                db_color = "#e74c3c"
         
         db_label = tk.Label(
             parent,
@@ -419,6 +438,31 @@ class DashboardWindow(tk.Tk):
             fg=db_color
         )
         db_label.pack(anchor="w", pady=(0, 5))
+        
+        # Add database setup help if needed
+        if "Setup Required" in db_status or "Connection Error" in db_status:
+            help_label = tk.Label(
+                parent,
+                text="💡 Run setup_database.sql in phpMyAdmin",
+                font=("Segoe UI", 9),
+                bg="#ffffff",
+                fg="#7f8c8d"
+            )
+            help_label.pack(anchor="w", pady=(0, 2))
+            
+            # Add test connection button
+            test_btn = tk.Button(
+                parent,
+                text="🔧 Test Database Setup",
+                font=("Segoe UI", 9),
+                bg="#3498db",
+                fg="white",
+                relief="flat",
+                padx=10,
+                pady=2,
+                command=self.test_database_setup
+            )
+            test_btn.pack(anchor="w", pady=(2, 5))
         
         # System performance
         perf_label = tk.Label(
@@ -603,6 +647,45 @@ class DashboardWindow(tk.Tk):
         except Exception as e:
             logger.error(f"Failed to open user management: {e}")
             messagebox.showerror("Error", "Failed to open user management window")
+
+    def test_database_setup(self):
+        """Test database setup and show detailed results"""
+        try:
+            import subprocess
+            import sys
+            
+            # Run the database test script
+            result = subprocess.run([sys.executable, "test_database.py"], 
+                                  capture_output=True, text=True, cwd=".")
+            
+            # Show results in a message box
+            if "✅ All database tests passed!" in result.stdout:
+                messagebox.showinfo(
+                    "Database Test Results", 
+                    "✅ Database setup is complete!\n\n"
+                    "All tables are properly configured.\n"
+                    "You can refresh the dashboard to see updated status."
+                )
+                # Refresh the dashboard
+                self.load_statistics()
+            else:
+                messagebox.showwarning(
+                    "Database Setup Required",
+                    "❌ Database setup incomplete!\n\n"
+                    "Please follow these steps:\n"
+                    "1. Start XAMPP/MySQL server\n"
+                    "2. Open phpMyAdmin (http://localhost/phpmyadmin)\n"
+                    "3. Import setup_database.sql file\n"
+                    "4. Click this button again to test\n\n"
+                    "For detailed instructions, see SETUP.md"
+                )
+                
+        except Exception as e:
+            messagebox.showerror(
+                "Test Error", 
+                f"Could not test database setup:\n{str(e)}\n\n"
+                "Please run 'python test_database.py' manually in terminal."
+            )
 
     def logout(self):
         """Handle logout"""
