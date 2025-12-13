@@ -82,19 +82,28 @@ class LoginWindow(tk.Tk):
             font=("Segoe UI", 11, "bold")
         ).pack(anchor="w", pady=(0, 5))
         
-        self.username_entry = tk.Entry(
-            form_frame, 
-            font=("Segoe UI", 12), 
-            bd=0,
-            bg="#ffffff", 
-            fg="#2c3e50", 
+        # Username entry with proper padding
+        username_wrapper = tk.Frame(
+            form_frame,
+            bg="#ffffff",
             relief="solid",
             borderwidth=1,
             highlightthickness=2,
             highlightcolor="#3498db",
             highlightbackground="#bdc3c7"
         )
-        self.username_entry.pack(fill="x", pady=(0, 15), ipady=10, ipadx=8)
+        username_wrapper.pack(fill="x", pady=(0, 15))
+        
+        self.username_entry = tk.Entry(
+            username_wrapper, 
+            font=("Segoe UI", 12), 
+            bd=0,
+            bg="#ffffff", 
+            fg="#2c3e50", 
+            relief="flat",
+            highlightthickness=0
+        )
+        self.username_entry.pack(fill="both", expand=True, padx=12, pady=10)
         
         # Password field
         tk.Label(
@@ -105,20 +114,29 @@ class LoginWindow(tk.Tk):
             font=("Segoe UI", 11, "bold")
         ).pack(anchor="w", pady=(0, 5))
         
-        self.password_entry = tk.Entry(
-            form_frame, 
-            show="*", 
-            font=("Segoe UI", 12), 
-            bd=0,
-            bg="#ffffff", 
-            fg="#2c3e50", 
+        # Password entry with proper padding
+        password_wrapper = tk.Frame(
+            form_frame,
+            bg="#ffffff",
             relief="solid",
             borderwidth=1,
             highlightthickness=2,
             highlightcolor="#3498db",
             highlightbackground="#bdc3c7"
         )
-        self.password_entry.pack(fill="x", pady=(0, 20), ipady=10)
+        password_wrapper.pack(fill="x", pady=(0, 20))
+        
+        self.password_entry = tk.Entry(
+            password_wrapper, 
+            show="*", 
+            font=("Segoe UI", 12), 
+            bd=0,
+            bg="#ffffff", 
+            fg="#2c3e50", 
+            relief="flat",
+            highlightthickness=0
+        )
+        self.password_entry.pack(fill="both", expand=True, padx=12, pady=10)
         
         # Login button
         self.login_btn = tk.Button(
@@ -152,6 +170,21 @@ class LoginWindow(tk.Tk):
         self.password_entry.bind('<Return>', lambda event: self.handle_login())
         self.bind('<Return>', lambda event: self.handle_login())
         
+        # Add focus effects for wrapper frames
+        def on_username_focus_in(e):
+            username_wrapper.config(highlightcolor="#3498db", highlightthickness=2)
+        def on_username_focus_out(e):
+            username_wrapper.config(highlightcolor="#bdc3c7", highlightthickness=1)
+        def on_password_focus_in(e):
+            password_wrapper.config(highlightcolor="#3498db", highlightthickness=2)
+        def on_password_focus_out(e):
+            password_wrapper.config(highlightcolor="#bdc3c7", highlightthickness=1)
+        
+        self.username_entry.bind('<FocusIn>', on_username_focus_in)
+        self.username_entry.bind('<FocusOut>', on_username_focus_out)
+        self.password_entry.bind('<FocusIn>', on_password_focus_in)
+        self.password_entry.bind('<FocusOut>', on_password_focus_out)
+        
         # Set initial focus to username entry
         self.after(100, lambda: self.username_entry.focus())
         
@@ -165,18 +198,78 @@ class LoginWindow(tk.Tk):
         )
         self.status_label.pack(pady=(10, 0))
         
+        # Modern action links section
+        actions_frame = tk.Frame(self, bg="#f5f7fa")
+        actions_frame.pack(pady=(20, 10))
+        
+        # Forgot password link
+        forgot_link = tk.Label(
+            actions_frame,
+            text="🔒 Forgot Password?",
+            bg="#f5f7fa",
+            fg="#3498db",
+            font=("Segoe UI", 10, "underline"),
+            cursor="hand2"
+        )
+        forgot_link.pack(side="left", padx=(0, 20))
+        forgot_link.bind("<Button-1>", lambda e: self.show_forgot_password())
+        forgot_link.bind("<Enter>", lambda e: forgot_link.config(fg="#2980b9"))
+        forgot_link.bind("<Leave>", lambda e: forgot_link.config(fg="#3498db"))
+        
+        # Sign up link
+        signup_link = tk.Label(
+            actions_frame,
+            text="👤 Create New Account",
+            bg="#f5f7fa",
+            fg="#27ae60",
+            font=("Segoe UI", 10, "underline"),
+            cursor="hand2"
+        )
+        signup_link.pack(side="right", padx=(20, 0))
+        signup_link.bind("<Button-1>", lambda e: self.show_signup())
+        signup_link.bind("<Enter>", lambda e: signup_link.config(fg="#229954"))
+        signup_link.bind("<Leave>", lambda e: signup_link.config(fg="#27ae60"))
+        
+        # Divider line
+        divider = tk.Frame(self, height=1, bg="#e1e8ed")
+        divider.pack(fill="x", pady=(15, 10), padx=40)
+        
         # Footer with default credentials info
         footer_frame = tk.Frame(self, bg="#f5f7fa")
         footer_frame.pack(side="bottom", pady=(0, 20))
         
-        info_text = "Default: admin/admin123 or test/test"
-        tk.Label(
-            footer_frame, 
-            text=info_text, 
-            bg="#f5f7fa", 
+        # Modern footer design
+        demo_label = tk.Label(
+            footer_frame,
+            text="🎯 Demo Credentials",
+            bg="#f5f7fa",
+            fg="#7f8c8d",
+            font=("Segoe UI", 9, "bold")
+        )
+        demo_label.pack()
+        
+        credentials_frame = tk.Frame(footer_frame, bg="#f5f7fa")
+        credentials_frame.pack(pady=(5, 0))
+        
+        # Admin credentials
+        admin_label = tk.Label(
+            credentials_frame,
+            text="Admin: admin / admin123",
+            bg="#f5f7fa",
             fg="#95a5a6",
-            font=("Segoe UI", 9)
-        ).pack()
+            font=("Segoe UI", 8)
+        )
+        admin_label.pack(side="left", padx=(0, 15))
+        
+        # Test credentials  
+        test_label = tk.Label(
+            credentials_frame,
+            text="Test: test / test",
+            bg="#f5f7fa",
+            fg="#95a5a6",
+            font=("Segoe UI", 8)
+        )
+        test_label.pack(side="right", padx=(15, 0))
 
     def handle_login(self):
         """Handle login process with enhanced security"""
